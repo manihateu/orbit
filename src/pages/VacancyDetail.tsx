@@ -91,7 +91,6 @@ export function VacancyDetailPage() {
     <Page>
       <section className="relative overflow-hidden pb-8 pt-28 sm:pt-32">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="grid-bg absolute inset-x-0 top-0 h-[280px] opacity-60" />
           <div className="absolute -right-32 top-0 size-[380px] rounded-full bg-brand/10 blur-[100px]" />
         </div>
 
@@ -182,11 +181,11 @@ export function VacancyDetailPage() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 lg:justify-end">
+              <div className="grid w-full gap-2 sm:ml-auto sm:w-[240px]">
                 <button
                   type="button"
                   onClick={() => setApplyOpen(true)}
-                  className={buttonStyles({ size: "lg", className: "w-full sm:w-auto" })}
+                  className={buttonStyles({ size: "lg", className: "w-full" })}
                 >
                   {applied ? "Вы откликнулись" : "Откликнуться"}
                   <Send className="size-4" />
@@ -194,7 +193,11 @@ export function VacancyDetailPage() {
                 <Link
                   to="/ai"
                   search={{ tab: "resume" }}
-                  className={buttonStyles({ variant: "secondary", size: "lg" })}
+                  className={buttonStyles({
+                    variant: "secondary",
+                    size: "lg",
+                    className: "w-full",
+                  })}
                 >
                   <Sparkles className="size-4 text-brand" />
                   Улучшить резюме

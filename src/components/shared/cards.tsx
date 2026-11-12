@@ -115,10 +115,13 @@ export function VacancyCard({ vacancy, className }: { vacancy: Vacancy; classNam
           <span className="text-[15px] font-bold tracking-[-0.02em]">
             {formatSalary(vacancy.salaryFrom, vacancy.salaryTo)}
           </span>
-          <span className="text-faint">·</span>
-          <span className="text-[12.5px] text-muted">{vacancy.employment}</span>
+          <span className="hidden text-faint sm:inline">·</span>
+          <span className="text-[12.5px] text-muted">
+            <span className="sm:hidden">{vacancy.employment.replace(" занятость", "")}</span>
+            <span className="hidden sm:inline">{vacancy.employment}</span>
+          </span>
           {vacancy.hot && (
-            <Badge variant="warning" className="ml-auto">
+            <Badge variant="warning">
               <Zap className="size-3" />
               Срочно
             </Badge>

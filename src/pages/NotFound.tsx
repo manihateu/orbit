@@ -8,7 +8,6 @@ export function NotFoundPage() {
     <Page>
       <section className="relative flex min-h-[82vh] items-center overflow-hidden pt-24">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="grid-bg absolute inset-0 opacity-50" />
           <div className="absolute left-1/2 top-1/3 size-[520px] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]" />
         </div>
         <div className="container-page relative text-center">

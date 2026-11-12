@@ -216,14 +216,6 @@
     border-color: var(--line-strong);
   }
 
-  .grid-bg {
-    background-image:
-      linear-gradient(to right, var(--line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 75%);
-  }
-
   .shimmer {
     background: linear-gradient(
       100deg,

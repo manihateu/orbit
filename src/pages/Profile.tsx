@@ -37,7 +37,7 @@ import { useTitle } from "@/lib/useTitle";
 import { useUi } from "@/store/ui";
 import { useUser } from "@/store/user";
 import { Avatar, Badge, Button, Card, Progress } from "@/components/ui/primitives";
-import { CompanyLogo } from "@/components/shared/cards";
+import { CompanyLogo, VacancyCard } from "@/components/shared/cards";
 import { Modal } from "@/components/ui/Modal";
 import { SuccessState } from "@/components/shared/modals";
 import { Page } from "@/components/layout/Page";
@@ -47,6 +47,7 @@ const routeApi = getRouteApi("/profile");
 const profileTabs = [
   { id: "overview", label: "Обзор" },
   { id: "applications", label: "Отклики" },
+  { id: "favorites", label: "Избранное" },
   { id: "activities", label: "Мероприятия" },
   { id: "workbook", label: "Трудовая книжка" },
   { id: "documents", label: "Документы" },
@@ -102,7 +103,6 @@ export function ProfilePage() {
     <Page>
       <section className="relative overflow-hidden pb-6 pt-24 sm:pt-32">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="grid-bg absolute inset-x-0 top-0 h-[260px] opacity-60" />
           <div className="absolute -right-24 top-0 size-[380px] rounded-full bg-brand/10 blur-[100px]" />
         </div>
 
@@ -299,6 +299,7 @@ export function ProfilePage() {
                 />
               )}
               {tab === "applications" && <ApplicationsTab applications={applications} />}
+              {tab === "favorites" && <FavoritesTab favorites={favorites} />}
               {tab === "activities" && <ActivitiesTab activities={activities} />}
               {tab === "workbook" && (
                 <WorkbookTab verified={verified} onVerify={() => setVerifyOpen(true)} />
@@ -464,7 +465,16 @@ function OverviewTab({
           <div className="rounded-[24px] border border-line bg-surface p-5">
             <div className="flex items-center justify-between">
               <p className="text-[12px] font-semibold">Избранное</p>
-              <Heart className="size-3.5 text-rose-400" />
+              <div className="flex items-center gap-2">
+                <Heart className="size-3.5 text-rose-400" />
+                <Link
+                  to="/profile"
+                  search={{ tab: "favorites" }}
+                  className="text-[10px] font-bold text-brand"
+                >
+                  Все
+                </Link>
+              </div>
             </div>
             <div className="mt-3 space-y-2">
               {favoriteVacancies.length === 0 && (
@@ -519,6 +529,55 @@ function OverviewTab({
     </div>
   );
 }
+
+function FavoritesTab({ favorites }: { favorites: string[] }) {
+  const items = favorites.flatMap((id) => {
+    const vacancy = vacancyById[id];
+    return vacancy ? [vacancy] : [];
+  });
+
+  return (
+    <div className="mx-auto max-w-[1100px] space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-[16px] font-semibold tracking-[-0.02em]">Избранное</p>
+          <p className="text-[11px] text-muted">
+            {items.length} {plural(items.length, "вакансия", "вакансии", "вакансий")} · сохраняй
+            интересное и возвращайся позже
+          </p>
+        </div>
+        <Link to="/vacancies" className="shrink-0">
+          <Button variant="secondary" size="sm">
+            Найти ещё
+            <ArrowRight className="size-3.5" />
+          </Button>
+        </Link>
+      </div>
+
+      {items.length === 0 ? (
+        <div className="grid place-items-center rounded-[24px] border border-dashed border-line bg-surface/50 px-6 py-16 text-center">
+          <span className="grid size-14 place-items-center rounded-2xl bg-rose-500/10 text-rose-500">
+            <Heart className="size-6" />
+          </span>
+          <p className="mt-4 text-[14px] font-semibold">Пока ничего не сохранено</p>
+          <p className="mt-1 max-w-[300px] text-[11.5px] leading-relaxed text-muted">
+            Нажимай на сердечко в карточке вакансии — она появится здесь.
+          </p>
+          <Link to="/vacancies" className="mt-4">
+            <Button size="sm">Смотреть вакансии</Button>
+          </Link>
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {items.map((vacancy) => (
+            <VacancyCard key={vacancy.id} vacancy={vacancy} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 function ApplicationsTab({ applications }: { applications: Application[] }) {
   return (

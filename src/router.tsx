@@ -87,7 +87,13 @@ const aiRoute = createRoute({
   component: AiPage,
 });
 
-type ProfileTab = "overview" | "applications" | "activities" | "workbook" | "documents";
+type ProfileTab =
+  | "overview"
+  | "applications"
+  | "favorites"
+  | "activities"
+  | "workbook"
+  | "documents";
 
 const profileRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -97,6 +103,7 @@ const profileRoute = createRoute({
     const allowed: ProfileTab[] = [
       "overview",
       "applications",
+      "favorites",
       "activities",
       "workbook",
       "documents",

@@ -95,6 +95,7 @@ export function Header() {
             <div className="flex items-center gap-1">
               <Link
                 to="/profile"
+                search={{ tab: "favorites" }}
                 aria-label="Избранное"
                 className="relative hidden size-10 place-items-center rounded-full border border-line bg-surface text-muted transition hover:border-line-strong hover:text-fg sm:grid"
               >

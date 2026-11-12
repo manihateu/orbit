@@ -41,7 +41,6 @@ export function PageHero({
       )}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="grid-bg absolute inset-x-0 top-0 h-[340px] opacity-70" />
         <div className="absolute -top-32 right-[-10%] size-[460px] rounded-full bg-brand/10 blur-[110px]" />
         <div className="absolute left-[-15%] top-24 size-[320px] rounded-full bg-brand/5 blur-[90px]" />
       </div>

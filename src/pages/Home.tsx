@@ -167,14 +167,14 @@ function Hero() {
               onSubmit={onSubmit}
               className="mt-6 rounded-[24px] border border-line bg-surface p-2 shadow-[var(--shadow-float)] sm:mt-8 sm:rounded-[26px]"
             >
-              <div className="flex gap-1 px-1 pt-1">
+              <div className="flex w-full gap-1 px-1 pt-1 sm:w-auto">
                 {tabs.map((item) => (
                   <button
                     key={item}
                     type="button"
                     onClick={() => setTab(item)}
                     className={cn(
-                      "relative rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-colors",
+                      "relative min-w-0 flex-1 whitespace-nowrap rounded-full px-1.5 py-1.5 text-[10.5px] font-semibold transition-colors sm:flex-none sm:px-3 sm:text-[11.5px]",
                       tab === item ? "text-brand" : "text-muted hover:text-fg",
                     )}
                   >
@@ -686,99 +686,125 @@ function ModuleCard({
 }
 
 function VacancyModuleVisual() {
+  const preview = [
+    {
+      id: "kaspiytech",
+      title: "Junior Frontend-разработчик",
+      salary: "45–65 тыс. ₽",
+      match: 94,
+    },
+    {
+      id: "meridian-media",
+      title: "SMM-специалист",
+      salary: "30–40 тыс. ₽",
+      match: 88,
+    },
+    {
+      id: "astrasoft",
+      title: "Python-разработчик (стажёр)",
+      salary: "50–70 тыс. ₽",
+      match: 90,
+    },
+  ];
+
   return (
-    <div className="relative mt-2 rounded-[22px] border border-line bg-surface-2/70 p-3.5">
+    <div className="relative mt-2 flex h-full min-h-[430px] flex-col rounded-[22px] border border-line bg-surface-2/70 p-3.5">
       <div className="flex items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2.5">
-        <Search className="size-3.5 text-faint" />
-        <span className="text-[11px] text-faint">Frontend, гибкий график</span>
-        <span className="ml-auto rounded-md bg-brand px-1.5 py-0.5 text-[9px] font-bold text-white">
+        <Search className="size-3.5 shrink-0 text-faint" />
+        <span className="truncate text-[11px] text-faint">Frontend, гибкий график</span>
+        <span className="ml-auto shrink-0 rounded-md bg-brand px-1.5 py-0.5 text-[9px] font-bold text-white">
           найти
         </span>
       </div>
-      <div className="mt-2.5 space-y-2">
-        {[
-          { id: "kaspiytech", title: "Junior Frontend-разработчик", salary: "45–65 тыс. ₽", match: 94 },
-          { id: "meridian-media", title: "SMM-специалист", salary: "30–40 тыс. ₽", match: 88 },
-          { id: "astrasoft", title: "Python-разработчик (стажёр)", salary: "50–70 тыс. ₽", match: 90 },
-        ].map((item, index) => {
-          const company = companyMap[item.id];
-          return (
-            <div
-              key={item.id}
-              className={cn(
-                "flex items-center gap-2.5 rounded-xl border border-line bg-surface p-2.5 transition group-hover:border-brand/20",
-                index === 2 && "hidden sm:flex",
-              )}
-            >
-              <CompanyLogo company={company} size="sm" className="size-8 rounded-[10px] text-[9px]" />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-[11px] font-semibold">{item.title}</p>
-                <p className="text-[9.5px] text-muted">{item.salary} · {company.name}</p>
-              </div>
-              <span className="rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[9px] font-bold text-emerald-600 dark:text-emerald-400">
-                {item.match}%
-              </span>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-2.5 flex items-center justify-between rounded-xl border border-dashed border-brand/25 bg-brand-soft/50 px-3 py-2">
-        <div className="flex items-center gap-2">
-          <span className="grid size-6 place-items-center rounded-full bg-brand text-white">
-            <Check className="size-3" />
-          </span>
-          <div>
-            <p className="text-[10px] font-semibold">Резюме проверено</p>
-            <p className="text-[9px] text-muted">Орбита · 12 ноября</p>
+
+      <div className="mt-3 flex flex-1 flex-col">
+        <section className="pt-1">
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-faint">Вакансии</p>
+            <span className="text-[8.5px] font-semibold text-brand">ещё 14</span>
           </div>
+          <div className="mt-2.5 space-y-2">
+            {preview.map((item, index) => {
+              const company = companyMap[item.id];
+              return (
+                <div
+                  key={item.id}
+                  className={cn(
+                    "flex items-center gap-3 rounded-xl border border-line bg-surface px-3.5 py-3",
+                    index === 2 && "hidden sm:flex",
+                  )}
+                >
+                  <CompanyLogo
+                    company={company}
+                    size="sm"
+                    className="size-10 rounded-[12px] text-[10px]"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[12px] font-semibold leading-snug">
+                      {item.title}
+                    </p>
+                    <p className="mt-0.5 truncate text-[9.5px] text-muted">
+                      {company.name} · {item.salary}
+                    </p>
+                  </div>
+                  <span className="shrink-0 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[8.5px] font-bold text-emerald-600 dark:text-emerald-400">
+                    {item.match}%
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mt-4 border-t border-line pt-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-faint">Резюме</p>
+            <span className="text-[8.5px] font-semibold text-emerald-600 dark:text-emerald-400">
+              проверено
+            </span>
+          </div>
+          <div className="mt-2.5 flex items-center gap-2.5 rounded-xl border border-line bg-surface px-3.5 py-3">
+            <span className="grid size-9 shrink-0 place-items-center rounded-full bg-linear-to-br from-brand-400 to-brand-800 text-[9px] font-bold text-white">
+              ДВ
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[11px] font-semibold">Даниил Ветров · 4 курс</p>
+              <p className="text-[9.5px] text-muted">Frontend · 149 ч активности</p>
+            </div>
+            <span className="shrink-0 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[8.5px] font-bold text-emerald-600 dark:text-emerald-400">
+              96%
+            </span>
+          </div>
+        </section>
+
+        <section className="mt-4 border-t border-line pt-3">
+          <div className="flex items-center justify-between">
+            <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-faint">
+              Собеседование
+            </p>
+            <span className="text-[8.5px] font-semibold text-emerald-600 dark:text-emerald-400">
+              подтверждено
+            </span>
+          </div>
+          <div className="mt-2.5 flex items-center gap-2.5 rounded-xl border border-line bg-surface px-3.5 py-3">
+            <div className="grid w-9 shrink-0 place-items-center rounded-lg bg-brand-soft py-1 text-brand">
+              <span className="text-[13px] font-bold leading-none">15</span>
+              <span className="text-[7px] font-semibold uppercase">ноя</span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-semibold">14:00 · КаспийТех</p>
+              <p className="text-[9.5px] text-muted">онлайн, 30 минут</p>
+            </div>
+            <BadgeCheck className="size-4 shrink-0 text-emerald-500" />
+          </div>
+        </section>
+
+        <div className="mt-auto flex items-center justify-between gap-2 rounded-xl border border-dashed border-brand/25 bg-brand-soft/40 px-3 py-2">
+          <span className="text-[9px] font-semibold text-brand">12 новых совпадений</span>
+          <span className="text-[8.5px] text-muted">3 приглашения</span>
         </div>
-        <span className="text-[9px] font-bold text-brand">готово к отклику</span>
       </div>
-      <div className="mt-2.5 flex items-center gap-2.5 rounded-xl border border-line bg-surface px-3 py-2.5">
-        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand-400 to-brand-800 text-[9px] font-bold text-white">
-          ДВ
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-[10px] font-semibold">Даниил Ветров · 4 курс</p>
-          <p className="text-[9px] text-muted">Frontend · 149 ч активности</p>
-        </div>
-        <span className="rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[8.5px] font-bold text-emerald-600 dark:text-emerald-400">
-          96%
-        </span>
-      </div>
-      <div className="mt-2.5 hidden items-center gap-2.5 rounded-xl border border-line bg-surface px-3 py-2.5 sm:flex">
-        <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-emerald-500/10 text-emerald-500">
-          <CalendarCheck className="size-3.5" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-[10px] font-semibold">Собеседование · 15 ноября</p>
-          <p className="text-[9px] text-muted">КаспийТех · 14:00, онлайн</p>
-        </div>
-        <span className="rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[8px] font-bold text-emerald-600 dark:text-emerald-400">
-          ок
-        </span>
-      </div>
-      <div className="mt-2.5 hidden grid-cols-2 gap-2 sm:grid">
-        <div className="rounded-xl border border-line bg-surface p-2.5">
-          <p className="text-[8px] uppercase tracking-wide text-faint">Новых совпадений</p>
-          <p className="mt-1 text-[15px] font-bold leading-none">12</p>
-          <p className="mt-1 text-[8px] text-emerald-500">+4 за неделю</p>
-        </div>
-        <div className="rounded-xl border border-line bg-surface p-2.5">
-          <p className="text-[8px] uppercase tracking-wide text-faint">Приглашения</p>
-          <p className="mt-1 text-[15px] font-bold leading-none">3</p>
-          <p className="mt-1 text-[8px] text-brand">от работодателей</p>
-        </div>
-      </div>
-      <div className="mt-2.5 hidden rounded-xl border border-line bg-surface px-3 py-2.5 sm:block">
-        <div className="flex justify-between text-[9px]">
-          <span className="text-muted">Профиль готов к отклику</span>
-          <span className="font-bold text-brand">92%</span>
-        </div>
-        <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-surface-3">
-          <div className="h-full w-[92%] rounded-full bg-brand" />
-        </div>
-      </div>
+
       <div className="pointer-events-none absolute -right-6 -top-6 size-24 rounded-full bg-brand/10 blur-2xl" />
     </div>
   );
