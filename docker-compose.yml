@@ -1,0 +1,24 @@
+services:
+  web:
+    image: ${ORBITA_IMAGE:-orbita-web:local}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: orbita-web
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /run
+    security_opt:
+      - no-new-privileges:true
+    cpus: 0.50
+    mem_limit: 128m
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3001/healthz"]
+      interval: 30s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
